@@ -1,14 +1,27 @@
-import { PropsWithChildren } from "react";
-import { StyleSheet, Text, View } from "react-native";
-
-export const CustomText = ({ children }: PropsWithChildren) => (
-  <Text>{children}</Text>
-);
+import { StyleSheet, View } from "react-native";
+import LoginScreen from "./screens/LoginScreen/LoginScreen";
+import { useEffect } from "react";
+import { SplashScreen } from "expo-router";
+import { useFonts } from "expo-font";
 
 export default function HomeScreen() {
+  const [loaded, error] = useFonts({
+    poppings: require("../assets/fonts/Poppins/Poppins-Medium.ttf"),
+  });
+
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
+  if (!loaded && !error) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
-      <CustomText>Welcome!</CustomText>
+      <LoginScreen />
     </View>
   );
 }
@@ -16,7 +29,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FF2255",
     alignItems: "center",
     justifyContent: "center",
   },
