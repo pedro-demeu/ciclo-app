@@ -5,132 +5,138 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image,
 } from "react-native";
-import { create } from "zustand";
-import { Formik } from "formik";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Ionicons } from "@expo/vector-icons";
 
-// Criando o estado global com Zustand
-const useAuthStore = create((set) => ({
-  email: "",
-  senha: "",
-  setCredentials: (email, senha) => set({ email, senha }),
-}));
-
 // Validação com Zod
-const loginSchema = z.object({
+const validationSchema = z.object({
   email: z.string().email("E-mail inválido"),
-  senha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
 });
 
+type DataForm = {
+  email: string;
+  password: string;
+};
+
 export default function LoginForm() {
-  const { setCredentials } = useAuthStore();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<DataForm>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(validationSchema),
+  });
+  const onSubmit = (data: DataForm) => console.log(data);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-
-      <Formik
-        initialValues={{ email: "", senha: "" }}
-        validationSchema={loginSchema}
-        onSubmit={(values) => {
-          setCredentials(values.email, values.senha);
-          console.log("Logando com:", values);
-        }}
-      >
-        {({ handleChange, handleSubmit, values, errors }) => (
-          <View style={styles.formContainer}>
-            {/* Input de E-mail */}
-            <View style={styles.inputContainer}>
+      <View style={styles.formContainer}>
+        <Controller
+          control={control}
+          name="email"
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View
+              style={[
+                styles.inputContainer,
+                {
+                  borderColor: !!errors.email?.message ? "#FF2255" : "#CCC",
+                },
+              ]}
+            >
               <Ionicons name="mail-outline" size={20} color="#FF2255" />
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  {
+                    color: !!errors.email?.message ? "#FF2255" : "#999",
+                  },
+                ]}
                 placeholder="E-mail"
-                placeholderTextColor="#999"
+                placeholderTextColor={
+                  !!errors.password?.message ? "#FF2255" : "#999"
+                }
                 keyboardType="email-address"
-                value={values.email}
-                onChangeText={handleChange("email")}
+                value={value}
+                onBlur={onBlur}
+                onChangeText={onChange}
               />
             </View>
-            {errors.email && (
-              <Text style={styles.errorText}>{errors.email}</Text>
-            )}
+          )}
+        />
+        {errors.email?.message && (
+          <Text style={styles.errorText}>{errors.email.message}</Text>
+        )}
 
-            {/* Input de Senha */}
-            <View style={styles.inputContainer}>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          name="password"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <View
+              style={[
+                styles.inputContainer,
+                {
+                  borderColor: !!errors.password?.message ? "#FF2255" : "#CCC",
+                },
+              ]}
+            >
               <Ionicons name="lock-closed-outline" size={20} color="#FF2255" />
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  {
+                    color: !!errors.password?.message ? "#FF2255" : "#999",
+                  },
+                ]}
                 placeholder="Senha"
-                placeholderTextColor="#999"
+                placeholderTextColor={
+                  !!errors.password?.message ? "#FF2255" : "#999"
+                }
                 secureTextEntry
-                value={values.senha}
-                onChangeText={handleChange("senha")}
+                value={value}
+                onChangeText={onChange}
               />
             </View>
-            {errors.senha && (
-              <Text style={styles.errorText}>{errors.senha}</Text>
-            )}
+          )}
+        />
 
-            {/* Botão de Login */}
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Entrar</Text>
-            </TouchableOpacity>
-
-            <Text
-              style={{
-                textAlign: "center",
-                marginBottom: 15,
-                marginTop: 25,
-                fontFamily: "poppings",
-                color: "#363636",
-              }}
-            >
-              Esqueceu sua senha?
-            </Text>
-          </View>
+        {errors.password?.message && (
+          <Text style={styles.errorText}>{errors.password?.message}</Text>
         )}
-      </Formik>
 
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "flex-end",
-          alignItems: "center",
-        }}
-      >
-        <View
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Text style={styles.buttonText}>Entrar</Text>
+        </TouchableOpacity>
+
+        <Text
           style={{
-            position: "absolute",
-            bottom: -245,
+            textAlign: "center",
+            paddingBottom: 15,
+            paddingTop: 25,
+            fontFamily: "poppings",
+            color: "#363636",
+            zIndex: 1,
           }}
         >
-          <Image
-            source={require("../../../assets/images/login-botom.png")}
-            style={{ alignSelf: "stretch" }}
-          />
-        </View>
-
-        <View
-          style={{
-            position: "absolute",
-            paddingBottom: 50,
-            zIndex: 1000,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              color: "#fff",
-              fontFamily: "poppings",
-              textDecorationLine: "underline",
-            }}
-          >
-            Não sou cadastrada
-          </Text>
-        </View>
+          Esqueceu sua senha?
+        </Text>
       </View>
     </View>
   );
@@ -139,14 +145,13 @@ export default function LoginForm() {
 // Estilos com StyleSheet.create
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "#FFF",
+    height: "100%",
     borderTopLeftRadius: 75,
     borderTopRightRadius: 75,
-    paddingHorizontal: 20,
-    height: "100%",
+    paddingHorizontal: 25,
+    paddingTop: 20,
   },
   title: {
     fontSize: 24,
@@ -154,7 +159,6 @@ const styles = StyleSheet.create({
     fontFamily: "poppings",
     color: "#868686",
     marginBottom: 20,
-    marginTop: 50,
   },
   formContainer: {
     width: "100%",
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingHorizontal: 10,
     paddingVertical: 10,
-    marginBottom: 30,
+    marginBottom: 20,
     backgroundColor: "#f5f5f5",
   },
   input: {
@@ -181,15 +185,16 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     fontSize: 14,
-    marginBottom: 10,
+    paddingBottom: 30,
     fontFamily: "poppings",
+    marginLeft: 25,
   },
   button: {
     backgroundColor: "#FF2255",
     paddingVertical: 20,
     borderRadius: 50,
     alignItems: "center",
-    margin: "auto",
+    alignSelf: "center",
     width: "50%",
   },
   buttonText: {
