@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  KeyboardAvoidingView,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
