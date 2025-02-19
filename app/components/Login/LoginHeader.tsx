@@ -17,6 +17,7 @@ export default function LoginHeader({ title }: { title: string }) {
         justifyContent: "center",
         width: "100%",
         height: "20%",
+        backgroundColor: "#FF2255",
         alignItems: "center",
       }}
     >

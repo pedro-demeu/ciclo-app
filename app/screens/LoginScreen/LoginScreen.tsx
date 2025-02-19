@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
-import LoginForm from "../../components/Login/LoginForm";
-import LoginHeader from "../../components/Login/LoginHeader";
+import LoginForm from "@/app/components/Login/LoginForm";
+import LoginHeader from "@/app/components/Login/LoginHeader";
 import LoginBottom from "@/app/components/Login/LoginBottom";
 
 export default function LoginScreen() {

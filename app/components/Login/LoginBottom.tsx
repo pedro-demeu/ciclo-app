@@ -4,35 +4,25 @@ export default function LoginBottom() {
   return (
     <View
       style={{
-        justifyContent: "flex-start",
         alignItems: "center",
+        justifyContent: "center",
+        alignSelf: "center",
       }}
     >
-      <View
-        style={{
-          bottom: -100,
-          position: "absolute",
-        }}
-      >
-        <Image
-          source={require("../../../assets/images/login-botom.png")}
-          style={{ alignSelf: "stretch" }}
-        />
-      </View>
-
       <Pressable>
         <Text
           style={{
             textAlign: "center",
-            color: "#fff",
+            color: "blue",
             fontFamily: "poppings",
             textDecorationLine: "underline",
-            top: -220,
+            zIndex: 1,
           }}
         >
           Não sou cadastrada
         </Text>
       </Pressable>
+      <Image source={require("../../../assets/images/login-botom.png")} />
     </View>
   );
 }

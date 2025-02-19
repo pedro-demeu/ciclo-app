@@ -5,11 +5,13 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  KeyboardAvoidingView,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Ionicons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Validação com Zod
 const validationSchema = z.object({
@@ -37,108 +39,116 @@ export default function LoginForm() {
   const onSubmit = (data: DataForm) => console.log(data);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <View style={styles.formContainer}>
-        <Controller
-          control={control}
-          name="email"
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View
-              style={[
-                styles.inputContainer,
-                {
-                  borderColor: !!errors.email?.message ? "#FF2255" : "#CCC",
-                },
-              ]}
-            >
-              <Ionicons name="mail-outline" size={20} color="#FF2255" />
-              <TextInput
+    <SafeAreaView style={styles.container}>
+      <View style={styles.subContainer}>
+        <Text style={styles.title}>Login</Text>
+        <View style={styles.formContainer}>
+          <Controller
+            control={control}
+            name="email"
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View
                 style={[
-                  styles.input,
+                  styles.inputContainer,
                   {
-                    color: !!errors.email?.message ? "#FF2255" : "#999",
+                    borderColor: !!errors.email?.message ? "#FF2255" : "#CCC",
                   },
                 ]}
-                placeholder="E-mail"
-                placeholderTextColor={
-                  !!errors.password?.message ? "#FF2255" : "#999"
-                }
-                keyboardType="email-address"
-                value={value}
-                onBlur={onBlur}
-                onChangeText={onChange}
-              />
-            </View>
+              >
+                <Ionicons name="mail-outline" size={20} color="#FF2255" />
+                <TextInput
+                  style={[
+                    styles.input,
+                    {
+                      color: !!errors.email?.message ? "#FF2255" : "#999",
+                    },
+                  ]}
+                  placeholder="E-mail"
+                  placeholderTextColor={
+                    !!errors.password?.message ? "#FF2255" : "#999"
+                  }
+                  keyboardType="email-address"
+                  value={value}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                />
+              </View>
+            )}
+          />
+          {errors.email?.message && (
+            <Text style={styles.errorText}>{errors.email.message}</Text>
           )}
-        />
-        {errors.email?.message && (
-          <Text style={styles.errorText}>{errors.email.message}</Text>
-        )}
 
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          name="password"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View
-              style={[
-                styles.inputContainer,
-                {
-                  borderColor: !!errors.password?.message ? "#FF2255" : "#CCC",
-                },
-              ]}
-            >
-              <Ionicons name="lock-closed-outline" size={20} color="#FF2255" />
-              <TextInput
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            name="password"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View
                 style={[
-                  styles.input,
+                  styles.inputContainer,
                   {
-                    color: !!errors.password?.message ? "#FF2255" : "#999",
+                    borderColor: !!errors.password?.message
+                      ? "#FF2255"
+                      : "#CCC",
                   },
                 ]}
-                placeholder="Senha"
-                placeholderTextColor={
-                  !!errors.password?.message ? "#FF2255" : "#999"
-                }
-                secureTextEntry
-                value={value}
-                onChangeText={onChange}
-              />
-            </View>
+              >
+                <Ionicons
+                  name="lock-closed-outline"
+                  size={20}
+                  color="#FF2255"
+                />
+                <TextInput
+                  style={[
+                    styles.input,
+                    {
+                      color: !!errors.password?.message ? "#FF2255" : "#999",
+                    },
+                  ]}
+                  placeholder="Senha"
+                  placeholderTextColor={
+                    !!errors.password?.message ? "#FF2255" : "#999"
+                  }
+                  secureTextEntry
+                  value={value}
+                  onChangeText={onChange}
+                />
+              </View>
+            )}
+          />
+
+          {errors.password?.message && (
+            <Text style={styles.errorText}>{errors.password?.message}</Text>
           )}
-        />
 
-        {errors.password?.message && (
-          <Text style={styles.errorText}>{errors.password?.message}</Text>
-        )}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSubmit(onSubmit)}
+          >
+            <Text style={styles.buttonText}>Entrar</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSubmit(onSubmit)}
-        >
-          <Text style={styles.buttonText}>Entrar</Text>
-        </TouchableOpacity>
-
-        <Text
-          style={{
-            textAlign: "center",
-            paddingBottom: 15,
-            paddingTop: 25,
-            fontFamily: "poppings",
-            color: "#363636",
-            zIndex: 1,
-          }}
-        >
-          Esqueceu sua senha?
-        </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              paddingBottom: 15,
+              paddingTop: 25,
+              fontFamily: "poppings",
+              color: "#363636",
+              zIndex: 1,
+            }}
+          >
+            Esqueceu sua senha?
+          </Text>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -146,11 +156,15 @@ export default function LoginForm() {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    backgroundColor: "#FF2255",
+    paddingTop: 20,
+  },
+  subContainer: {
     backgroundColor: "#FFF",
-    height: "100%",
+    paddingHorizontal: 25,
     borderTopLeftRadius: 75,
     borderTopRightRadius: 75,
-    paddingHorizontal: 25,
+    width: "100%",
     paddingTop: 20,
   },
   title: {
@@ -158,6 +172,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "poppings",
     color: "#868686",
+    alignSelf: "center",
     marginBottom: 20,
   },
   formContainer: {
@@ -195,7 +210,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     alignSelf: "center",
-    width: "50%",
+    width: "100%",
   },
   buttonText: {
     color: "#fff",
