@@ -1,15 +1,21 @@
-import { StyleSheet, View } from "react-native";
-import LoginScreen from "./screens/LoginScreen/LoginScreen";
-import { useEffect } from "react";
+import * as React from "react";
 import { SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
+import { View } from "react-native";
+import RootStack from "./stack/RootStack";
+import AuthStack from "./stack/AuthStack";
+
+function Routes() {
+  const isAuthenticated = false;
+  return isAuthenticated ? <AuthStack /> : <RootStack />;
+}
 
 export default function HomeScreen() {
   const [loaded, error] = useFonts({
     poppings: require("../assets/fonts/Poppins/Poppins-Medium.ttf"),
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
     }
@@ -20,17 +26,12 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <LoginScreen />
+    <View
+      style={{
+        flex: 1,
+      }}
+    >
+      <Routes />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFF",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
