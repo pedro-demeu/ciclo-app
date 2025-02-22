@@ -12,6 +12,11 @@ export default function WelcomeScreen() {
   };
 
   const handlePress = () => {
+    navigation.navigate("createCalendar");
+  };
+
+  // TODO: remove auth and cache
+  const handleExit = () => {
     navigation.navigate("login");
   };
 
@@ -90,7 +95,7 @@ export default function WelcomeScreen() {
             marginTop: 160,
           }}
         >
-          <Bottom label="Sair" onPress={handlePress} />
+          <Bottom label="Sair" onPress={handleExit} />
         </View>
       </View>
       <View

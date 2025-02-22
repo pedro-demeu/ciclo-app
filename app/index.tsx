@@ -3,6 +3,7 @@ import { SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import { View } from "react-native";
 import RootStack from "./stack/RootStack";
+import StepProvider from "./contexts/StepContext";
 
 export default function HomeScreen() {
   const [loaded, error] = useFonts({
@@ -25,7 +26,9 @@ export default function HomeScreen() {
         flex: 1,
       }}
     >
-      <RootStack />
+      <StepProvider>
+        <RootStack />
+      </StepProvider>
     </View>
   );
 }

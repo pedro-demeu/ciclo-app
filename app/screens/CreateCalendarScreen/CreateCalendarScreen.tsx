@@ -1,0 +1,129 @@
+import { SafeAreaView, View, Image, Text } from "react-native";
+import ProgressHorizontalBar from "../../components/ProgressCreatingCalendar/ProgressHorizontalBar";
+import { useSteps } from "../../contexts/StepContext";
+import { Calendar } from "react-native-calendars";
+import { SetStateAction, useState } from "react";
+import { useNavigation } from "expo-router";
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../stack/RootStack";
+import Bottom from "../../components/Bottom/Bottom";
+
+interface Step {
+  id: number;
+  done: boolean;
+}
+
+export default function CreateCalendarScreen() {
+  const { steps, nextStep, updateStep } = useSteps();
+  const [selected, setSelected] = useState<Step | null>(null);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const handleNext = () => {
+    navigation.navigate("duration");
+    nextStep();
+    selected && updateStep(1, true);
+  };
+
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: "#FF2255",
+        justifyContent: "space-between",
+      }}
+    >
+      <Image source={require("../../../assets/images/forma_solta.png")} />
+      <View
+        style={{
+          position: "absolute",
+          alignSelf: "center",
+          flex: 1,
+          zIndex: 1,
+        }}
+      >
+        <View
+          style={{
+            height: 200,
+            paddingTop: 50,
+            alignSelf: "center",
+            width: "100%",
+          }}
+        >
+          <ProgressHorizontalBar stepList={steps} />
+        </View>
+
+        <Text
+          style={{
+            position: "absolute",
+            color: "white",
+            fontFamily: "poppings",
+            textAlign: "center",
+            alignSelf: "center",
+            fontSize: 22,
+            marginTop: 200,
+            fontWeight: "100",
+          }}
+        >
+          Qual a data da sua{" "}
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontFamily: "poppings",
+            }}
+          >
+            última
+          </Text>{" "}
+          menstruação?
+        </Text>
+
+        <View
+          style={{
+            marginTop: 100,
+            marginBottom: 60,
+          }}
+        >
+          <Calendar
+            style={{
+              borderRadius: 19,
+              height: 350,
+              shadowColor: "#000",
+              shadowOffset: { width: 2, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+            theme={{
+              backgroundColor: "#ffffff",
+              calendarBackground: "#ffffff",
+              textSectionTitleColor: "#b6c1cd",
+              selectedDayBackgroundColor: "#FF2255",
+              selectedDayTextColor: "#ffffff",
+              todayTextColor: "#FF2255",
+              dayTextColor: "#2d4150",
+            }}
+            onDayPress={(day: { dateString: SetStateAction<Step | null> }) => {
+              setSelected(day.dateString);
+            }}
+            markedDates={{
+              [selected?.id?.toString() || ""]: {
+                selected: true,
+                disableTouchEvent: true,
+                selectedDotColor: "orange",
+              },
+            }}
+          />
+        </View>
+
+        <Bottom label="Continuar" onPress={handleNext} />
+      </View>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+        }}
+      >
+        <Image source={require("../../../assets/images/forma_solta_2.png")} />
+      </View>
+    </SafeAreaView>
+  );
+}
