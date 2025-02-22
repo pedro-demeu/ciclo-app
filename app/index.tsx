@@ -3,12 +3,6 @@ import { SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import { View } from "react-native";
 import RootStack from "./stack/RootStack";
-import AuthStack from "./stack/AuthStack";
-
-function Routes() {
-  const isAuthenticated = false;
-  return isAuthenticated ? <AuthStack /> : <RootStack />;
-}
 
 export default function HomeScreen() {
   const [loaded, error] = useFonts({
@@ -31,7 +25,7 @@ export default function HomeScreen() {
         flex: 1,
       }}
     >
-      <Routes />
+      <RootStack />
     </View>
   );
 }

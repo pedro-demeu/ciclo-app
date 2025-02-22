@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { AuthStackParamList } from "@/app/stack/AuthStack";
+import { RootStackParamList } from "@/app/stack/RootStack";
 
 // Validação com Zod
 const validationSchema = z.object({
@@ -26,7 +26,7 @@ type DataForm = {
 };
 
 export default function LoginForm() {
-  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const {
     control,
@@ -40,7 +40,7 @@ export default function LoginForm() {
     resolver: zodResolver(validationSchema),
   });
   const onSubmit = (data: DataForm) => {
-    navigation.navigate("Welcome");
+    navigation.navigate("welcome");
     console.log(data);
   };
 
@@ -149,7 +149,7 @@ export default function LoginForm() {
               color: "#363636",
               zIndex: 1,
             }}
-            onPress={() => navigation.navigate("Welcome")}
+            // onPress={() => navigation.navigate("")}
           >
             Esqueceu sua senha?
           </Text>
