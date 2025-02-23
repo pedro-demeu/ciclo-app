@@ -6,6 +6,8 @@ import CreateCalendarScreen from "../screens/CreateCalendarScreen/CreateCalendar
 import DurationScreen from "../screens/DurationScreen/DurationScreen";
 import IntensityScreen from "../screens/IntensityScreen/IntensityScreen";
 import DurationCicleScreen from "../screens/DurationCicleScreen/DurationCicleScreen";
+import ContraceptiveScreen from "../screens/ContraceptiveScreen/ContraceptiveScreen";
+import SuccessCalendarScreen from "../screens/SuccessCalendarScreen/SuccessCalendarScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +18,8 @@ export type RootStackParamList = {
   duration: undefined;
   intensity: undefined;
   durationCicle: undefined;
+  contraceptive: undefined;
+  successCalendar: undefined;
 };
 
 const RootStack = () => {
@@ -34,6 +38,8 @@ const RootStack = () => {
       <Stack.Screen name="duration" component={DurationScreen} />
       <Stack.Screen name="intensity" component={IntensityScreen} />
       <Stack.Screen name="durationCicle" component={DurationCicleScreen} />
+      <Stack.Screen name="contraceptive" component={ContraceptiveScreen} />
+      <Stack.Screen name="successCalendar" component={SuccessCalendarScreen} />
     </Stack.Navigator>
   );
 };

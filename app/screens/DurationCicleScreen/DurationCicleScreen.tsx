@@ -16,9 +16,9 @@ export default function DurationCicleScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleNext = () => {
-    navigation.navigate("intensity");
+    navigation.navigate("contraceptive");
     nextStep();
-    updateStep(2, true);
+    updateStep(3, true);
   };
 
   return (
