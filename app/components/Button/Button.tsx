@@ -11,7 +11,15 @@ export default function Button({ label, onPress }: ButtonProps) {
       style={{
         width: "100%",
         borderRadius: 50,
-        height: 80,
+        height: 60,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
         paddingHorizontal: 20,
         justifyContent: "center",
         alignItems: "center",

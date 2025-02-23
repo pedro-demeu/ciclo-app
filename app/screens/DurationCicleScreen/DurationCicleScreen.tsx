@@ -18,7 +18,7 @@ export default function DurationCicleScreen() {
   const handleNext = () => {
     navigation.navigate("contraceptive");
     nextStep();
-    updateStep(3, true);
+    updateStep(4, true);
   };
 
   return (
