@@ -8,7 +8,7 @@ import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
 import Bottom from "../../components/Bottom/Bottom";
 
-interface Step {
+export interface Step {
   id: number;
   done: boolean;
 }
@@ -21,7 +21,7 @@ export default function CreateCalendarScreen() {
   const handleNext = () => {
     navigation.navigate("duration");
     nextStep();
-    selected && updateStep(1, true);
+    updateStep(1, true);
   };
 
   return (

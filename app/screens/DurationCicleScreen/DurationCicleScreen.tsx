@@ -9,8 +9,8 @@ import Bottom from "../../components/Bottom/Bottom";
 import NumberInput from "../../components/NumberInput/NumberInput";
 import { Step } from "../CreateCalendarScreen/CreateCalendarScreen";
 
-export default function DurationScreen() {
-  const [duration, setDuration] = useState(5);
+export default function DurationCicleScreen() {
+  const [duration, setDuration] = useState(21);
   const { steps, nextStep, updateStep } = useSteps();
   const [selected, setSelected] = useState<Step | null>(null);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -69,7 +69,7 @@ export default function DurationScreen() {
             >
               Quantos dias
             </Text>{" "}
-            costuma durar a sua menstruação?
+            dura seu ciclo?
           </Text>
 
           <View
