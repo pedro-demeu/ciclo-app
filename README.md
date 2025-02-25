@@ -15,7 +15,7 @@ Zod: Validação de esquemas de dados.
 
 Zustand: Para gerenciamento de contextos.
 
-Formik: Gerenciamento de formulários simplificado.
+React Hook Form: Gerenciamento de formulários simplificado.
 
 React Native Gesture Handler e Reanimated: Melhor suporte a gestos e animações.
 
