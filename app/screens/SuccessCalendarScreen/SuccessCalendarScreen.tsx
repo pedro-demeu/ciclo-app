@@ -2,8 +2,14 @@ import { Image, SafeAreaView, Text, View } from "react-native";
 
 import Button from "../../components/Button/Button";
 import Bottom from "../../components/Bottom/Bottom";
+import { useNavigation } from "expo-router";
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "@/app/stack/RootStack";
 
 export default function SuccessCalendarScreen() {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  //TODO: clean up the Stack Navigation when exit
   return (
     <SafeAreaView
       style={{
@@ -53,7 +59,12 @@ export default function SuccessCalendarScreen() {
         >
           <Button label="Ver calendário" onPress={() => {}} />
         </View>
-        <Bottom label="Ir para Home" onPress={() => {}} />
+        <Bottom
+          label="Ir para Home"
+          onPress={() => {
+            navigation.navigate("homeWithCalendar");
+          }}
+        />
       </View>
       <Image
         style={{
