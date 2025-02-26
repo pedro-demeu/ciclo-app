@@ -26,12 +26,12 @@ interface CreatingQueueState {
   currentStep: number;
   steps: { id: number; done: boolean }[];
   formData: FormData;
-  prevStep: () => void;
+  goBack: () => void;
   updateFormData: (data: FormData, step: Step) => void;
   resetFormData: () => void;
 }
 
-export const useCreatingQueue = create<CreatingQueueState>((set) => ({
+export const useCalendarFormContext = create<CreatingQueueState>((set) => ({
   currentStep: 0,
   steps: [
     { id: 1, done: false },
@@ -41,17 +41,18 @@ export const useCreatingQueue = create<CreatingQueueState>((set) => ({
     { id: 5, done: false },
   ],
   formData: {},
-  prevStep: () =>
+  goBack: () =>
     set((state) => ({
       currentStep:
         state.currentStep > 0 ? state.currentStep - 1 : state.currentStep,
-      steps: state.steps.map((step) =>
-        // eslint-disable-next-line prettier/prettier
-        step.id === state.currentStep - 1
-          ? { ...step, done: false }
-          : // eslint-disable-next-line prettier/prettier
-            { ...step, done: true }
-      ),
+      steps: state.steps
+        .map((s) => {
+          if (s.id === state.currentStep) {
+            return { ...s, done: false };
+          }
+          return s;
+        })
+        .sort((a, b) => a.id - b.id),
     })),
   updateFormData: (data, step) =>
     set((state) => ({
@@ -59,7 +60,8 @@ export const useCreatingQueue = create<CreatingQueueState>((set) => ({
       currentStep: state.currentStep + 1,
       steps: state.steps
         .filter((s) => s.id !== step.id)
-        .concat({ ...step, done: true }),
+        .concat({ ...step, done: true })
+        .sort((a, b) => a.id - b.id),
     })),
 
   resetFormData: () =>

@@ -5,7 +5,7 @@ import Bottom from "../../components/Bottom/Bottom";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
 import { useState } from "react";
-import { useCreatingQueue } from "@/app/contexts/FormData";
+import { useCalendarFormContext } from "@/app/contexts/FormData";
 
 export default function ContraceptiveScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -13,13 +13,17 @@ export default function ContraceptiveScreen() {
     // eslint-disable-next-line prettier/prettier
     null
   );
-  const { nextStep, updateFormData } = useCreatingQueue();
+  const { updateFormData, goBack } = useCalendarFormContext();
   const handleNext = () => {
     navigation.navigate("successCalendar");
-    nextStep();
-    updateFormData({ useContraceptive: useContraceptive ?? false });
+    updateFormData(
+      { useContraceptive: useContraceptive ?? false },
+      // eslint-disable-next-line prettier/prettier
+      { id: 5, done: true }
+    );
   };
   const handleBack = () => {
+    goBack();
     navigation.goBack();
   };
 

@@ -6,19 +6,19 @@ import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
 import Bottom from "../../components/Bottom/Bottom";
 import NumberInput from "../../components/NumberInput/NumberInput";
-import { useCreatingQueue } from "@/app/contexts/FormData";
+import { useCalendarFormContext } from "@/app/contexts/FormData";
 
 export default function DurationCicleScreen() {
   const [duration, setDuration] = useState(21);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { nextStep, updateFormData, steps } = useCreatingQueue();
+  const { updateFormData, goBack } = useCalendarFormContext();
   const handleNext = () => {
     navigation.navigate("contraceptive");
-    nextStep();
-    updateFormData({ duration });
+    updateFormData({ duration }, { id: 4, done: true });
   };
 
   const handleBack = () => {
+    goBack();
     navigation.goBack();
   };
 
@@ -48,7 +48,7 @@ export default function DurationCicleScreen() {
             width: "100%",
           }}
         >
-          <ProgressHorizontalBar stepList={steps} />
+          <ProgressHorizontalBar />
         </View>
         <View>
           <Text

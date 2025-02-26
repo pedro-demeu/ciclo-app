@@ -6,28 +6,22 @@ import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
 import Bottom from "../../components/Bottom/Bottom";
 import NumberInput from "../../components/NumberInput/NumberInput";
-import { useCreatingQueue } from "@/app/contexts/FormData";
+import { useCalendarFormContext } from "@/app/contexts/FormData";
 
 export default function DurationScreen() {
   const [duration, setDuration] = useState(5);
-  const { currentStep, formData, nextStep, prevStep, updateFormData, steps } =
-    useCreatingQueue();
+  const { goBack: prevStep, updateFormData } = useCalendarFormContext();
 
-  console.log({
-    currentStep,
-    formData,
-  });
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleNext = () => {
     navigation.navigate("intensity");
-    nextStep();
-    updateFormData({ duration });
+    updateFormData({ duration }, { id: 2, done: true });
   };
 
   const handleBack = () => {
-    navigation.goBack();
     prevStep();
+    navigation.goBack();
   };
 
   return (
@@ -56,7 +50,7 @@ export default function DurationScreen() {
             width: "100%",
           }}
         >
-          <ProgressHorizontalBar stepList={steps} />
+          <ProgressHorizontalBar />
         </View>
         <View>
           <Text

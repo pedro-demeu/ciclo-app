@@ -1,9 +1,9 @@
-import { useCreatingQueue } from "@/app/contexts/FormData";
+import { useCalendarFormContext } from "@/app/contexts/FormData";
 import { View, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function ProgressHorizontalBar() {
-  const { steps } = useCreatingQueue();
+  const { steps } = useCalendarFormContext();
 
   console.log({
     steps,

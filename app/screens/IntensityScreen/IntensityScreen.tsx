@@ -4,22 +4,22 @@ import ButtonOption from "../../components/ButtonOption/ButtonOption";
 import Bottom from "../../components/Bottom/Bottom";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
-import { Intensity, useCreatingQueue } from "@/app/contexts/FormData";
+import { Intensity, useCalendarFormContext } from "@/app/contexts/FormData";
 import { useState } from "react";
 
 export default function ItensityScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { nextStep, updateFormData } = useCreatingQueue();
+  const { updateFormData, goBack } = useCalendarFormContext();
   const [intensity, setIntensity] = useState<Intensity | null>(null);
 
   const handleNext = () => {
     navigation.navigate("durationCicle");
-    nextStep();
-    updateFormData({ intensity });
+    intensity && updateFormData({ intensity }, { id: 3, done: true });
   };
 
   const handleBack = () => {
     navigation.goBack();
+    goBack();
   };
   return (
     <LayoutContainer>

@@ -6,7 +6,7 @@ import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
 import Bottom from "../../components/Bottom/Bottom";
-import { useCreatingQueue } from "@/app/contexts/FormData";
+import { useCalendarFormContext } from "@/app/contexts/FormData";
 
 export interface Step {
   id: number;
@@ -58,18 +58,16 @@ LocaleConfig.locales["pt-BR"] = {
 LocaleConfig.defaultLocale = "pt-BR";
 
 export default function CreateCalendarScreen() {
-  const { steps, prevStep, updateFormData } = useCreatingQueue();
+  const { updateFormData } = useCalendarFormContext();
   const [selected, setSelected] = useState<string | null>(null);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleNext = () => {
     navigation.navigate("duration");
     selected && updateFormData({ lastMenses: selected }, { id: 1, done: true });
-    // setFormData((data) => ({ ...data, last_menses: selected }));
   };
 
   const handleBack = () => {
-    prevStep();
     navigation.goBack();
   };
 
@@ -98,7 +96,7 @@ export default function CreateCalendarScreen() {
             width: "100%",
           }}
         >
-          <ProgressHorizontalBar stepList={steps} />
+          <ProgressHorizontalBar />
         </View>
 
         <Text
