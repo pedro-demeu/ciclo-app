@@ -1,27 +1,76 @@
 import { SafeAreaView, View, Image, Text } from "react-native";
 import ProgressHorizontalBar from "../../components/ProgressCreatingCalendar/ProgressHorizontalBar";
-import { useSteps } from "../../contexts/StepContext";
-import { Calendar } from "react-native-calendars";
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import { SetStateAction, useState } from "react";
 import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
 import Bottom from "../../components/Bottom/Bottom";
+import { useCreatingQueue } from "@/app/contexts/FormData";
 
 export interface Step {
   id: number;
   done: boolean;
 }
 
+LocaleConfig.locales["pt-BR"] = {
+  monthNames: [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ],
+  monthNamesShort: [
+    "Jan",
+    "Fev",
+    "Mar",
+    "Abril",
+    "Mai",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Set",
+    "Out.",
+    "Nov",
+    "Dez",
+  ],
+  dayNames: [
+    "Domingo",
+    "Segunda",
+    "Terça",
+    "Quarta",
+    "Quinta",
+    "Sexta",
+    "Sábado",
+  ],
+  dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+  today: "Hoje",
+};
+
+LocaleConfig.defaultLocale = "pt-BR";
+
 export default function CreateCalendarScreen() {
-  const { steps, nextStep, updateStep } = useSteps();
-  const [selected, setSelected] = useState<Step | null>(null);
+  const { steps, prevStep, updateFormData } = useCreatingQueue();
+  const [selected, setSelected] = useState<string | null>(null);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleNext = () => {
     navigation.navigate("duration");
-    nextStep();
-    updateStep(1, true);
+    selected && updateFormData({ lastMenses: selected }, { id: 1, done: true });
+    // setFormData((data) => ({ ...data, last_menses: selected }));
+  };
+
+  const handleBack = () => {
+    prevStep();
+    navigation.goBack();
   };
 
   return (
@@ -97,15 +146,17 @@ export default function CreateCalendarScreen() {
               calendarBackground: "#ffffff",
               textSectionTitleColor: "#b6c1cd",
               selectedDayBackgroundColor: "#FF2255",
-              selectedDayTextColor: "#ffffff",
+              selectedDayTextColor: "#FFFFFF",
               todayTextColor: "#FF2255",
               dayTextColor: "#2d4150",
             }}
-            onDayPress={(day: { dateString: SetStateAction<Step | null> }) => {
+            onDayPress={(day: {
+              dateString: SetStateAction<string | null>;
+            }) => {
               setSelected(day.dateString);
             }}
             markedDates={{
-              [selected?.id?.toString() || ""]: {
+              [String(selected)]: {
                 selected: true,
                 disableTouchEvent: true,
                 selectedDotColor: "orange",
@@ -114,7 +165,14 @@ export default function CreateCalendarScreen() {
           />
         </View>
 
-        <Bottom label="Continuar" onPress={handleNext} />
+        <View
+          style={{
+            marginBottom: 20,
+          }}
+        >
+          <Bottom label="Continuar" onPress={handleNext} />
+        </View>
+        <Bottom label="Voltar" onPress={handleBack} />
       </View>
       <View
         style={{

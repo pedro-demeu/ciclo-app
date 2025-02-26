@@ -3,16 +3,23 @@ import LayoutContainer from "../../components/LayoutContainer/LayoutContainer";
 import ButtonOption from "../../components/ButtonOption/ButtonOption";
 import Bottom from "../../components/Bottom/Bottom";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { useSteps } from "../../contexts/StepContext";
 import { RootStackParamList } from "../../stack/RootStack";
+import { Intensity, useCreatingQueue } from "@/app/contexts/FormData";
+import { useState } from "react";
 
 export default function ItensityScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { nextStep, updateStep } = useSteps();
+  const { nextStep, updateFormData } = useCreatingQueue();
+  const [intensity, setIntensity] = useState<Intensity | null>(null);
+
   const handleNext = () => {
     navigation.navigate("durationCicle");
     nextStep();
-    updateStep(3, true);
+    updateFormData({ intensity });
+  };
+
+  const handleBack = () => {
+    navigation.goBack();
   };
   return (
     <LayoutContainer>
@@ -33,13 +40,51 @@ export default function ItensityScreen() {
       </Text>
 
       <View style={{ marginTop: 20, marginBottom: 40 }}>
-        <ButtonOption name="Leve" onPress={() => {}} />
-        <ButtonOption name="Entre leve e moderado" onPress={() => {}} />
-        <ButtonOption name="Moderado" onPress={() => {}} />
-        <ButtonOption name="Entre moderado e intenso" onPress={() => {}} />
-        <ButtonOption name="Intenso" onPress={() => {}} />
+        <ButtonOption
+          name="Leve"
+          onPress={() => {
+            setIntensity(Intensity.LOW);
+          }}
+          selected={intensity === Intensity.LOW}
+        />
+        <ButtonOption
+          name="Entre leve e moderado"
+          onPress={() => {
+            setIntensity(Intensity.LOW_MEDIUM);
+          }}
+          selected={intensity === Intensity.LOW_MEDIUM}
+        />
+        <ButtonOption
+          name="Moderado"
+          onPress={() => {
+            setIntensity(Intensity.MEDIUM);
+          }}
+          selected={intensity === Intensity.MEDIUM}
+        />
+        <ButtonOption
+          name="Entre moderado e intenso"
+          onPress={() => {
+            setIntensity(Intensity.MEDIUM_HIGH);
+          }}
+          selected={intensity === Intensity.MEDIUM_HIGH}
+        />
+        <ButtonOption
+          name="Intenso"
+          onPress={() => {
+            setIntensity(Intensity.HIGH);
+          }}
+          selected={intensity === Intensity.HIGH}
+        />
       </View>
-      <Bottom label="Continuar" onPress={handleNext} />
+      <View
+        style={{
+          marginBottom: 20,
+        }}
+      >
+        <Bottom label="Continuar" onPress={handleNext} />
+      </View>
+
+      <Bottom label="Voltar" onPress={handleBack} />
     </LayoutContainer>
   );
 }

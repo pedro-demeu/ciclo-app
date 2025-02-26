@@ -3,17 +3,26 @@ import LayoutContainer from "../../components/LayoutContainer/LayoutContainer";
 import ButtonOption from "../../components/ButtonOption/ButtonOption";
 import Bottom from "../../components/Bottom/Bottom";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { useSteps } from "../../contexts/StepContext";
 import { RootStackParamList } from "../../stack/RootStack";
+import { useState } from "react";
+import { useCreatingQueue } from "@/app/contexts/FormData";
 
 export default function ContraceptiveScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { nextStep, updateStep } = useSteps();
+  const [useContraceptive, setUseContraceptive] = useState<boolean | null>(
+    // eslint-disable-next-line prettier/prettier
+    null
+  );
+  const { nextStep, updateFormData } = useCreatingQueue();
   const handleNext = () => {
     navigation.navigate("successCalendar");
     nextStep();
-    updateStep(5, true);
+    updateFormData({ useContraceptive: useContraceptive ?? false });
   };
+  const handleBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <LayoutContainer>
       <Text
@@ -33,10 +42,31 @@ export default function ContraceptiveScreen() {
       </Text>
 
       <View style={{ marginTop: 20, marginBottom: 40 }}>
-        <ButtonOption name="Sim" onPress={() => {}} />
-        <ButtonOption name="Não" onPress={() => {}} />
+        <ButtonOption
+          name="Sim"
+          onPress={() => {
+            setUseContraceptive(true);
+          }}
+          selected={useContraceptive === true}
+        />
+        <ButtonOption
+          name="Não"
+          onPress={() => {
+            setUseContraceptive(false);
+          }}
+          selected={
+            typeof useContraceptive === "boolean" && useContraceptive === false
+          }
+        />
       </View>
-      <Bottom label="Continuar" onPress={handleNext} />
+      <View
+        style={{
+          marginBottom: 20,
+        }}
+      >
+        <Bottom label="Continuar" onPress={handleNext} />
+      </View>
+      <Bottom label="Voltar" onPress={handleBack} />
     </LayoutContainer>
   );
 }

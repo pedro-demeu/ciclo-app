@@ -1,13 +1,11 @@
 import { SafeAreaView, View, Image } from "react-native";
 import ProgressHorizontalBar from "../ProgressCreatingCalendar/ProgressHorizontalBar";
-import { useSteps } from "../../contexts/StepContext";
 
 interface LayoutContainerProps {
   children: React.ReactNode;
 }
 
 export default function LayoutContainer({ children }: LayoutContainerProps) {
-  const { steps } = useSteps();
   return (
     <SafeAreaView
       style={{
@@ -34,7 +32,7 @@ export default function LayoutContainer({ children }: LayoutContainerProps) {
             width: "100%",
           }}
         >
-          <ProgressHorizontalBar stepList={steps} />
+          <ProgressHorizontalBar />
         </View>
         {children}
       </View>

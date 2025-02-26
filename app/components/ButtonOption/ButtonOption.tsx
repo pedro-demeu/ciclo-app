@@ -3,15 +3,17 @@ import { Text, TouchableOpacity } from "react-native";
 export default function ButtonOption({
   name,
   onPress,
+  selected,
 }: {
   name: string;
   onPress: () => void;
+  selected: boolean;
 }) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
-        backgroundColor: "white",
+        backgroundColor: selected ? "#4BA4F2" : "#FFF",
         padding: 10,
         borderRadius: 5,
         marginVertical: 10,
@@ -24,7 +26,7 @@ export default function ButtonOption({
     >
       <Text
         style={{
-          color: "#FF2255",
+          color: selected ? "#FFF" : "#FF2255",
           fontFamily: "poppins",
           fontSize: 16,
           textAlign: "center",

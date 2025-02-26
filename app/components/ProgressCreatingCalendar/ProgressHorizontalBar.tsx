@@ -1,23 +1,17 @@
+import { useCreatingQueue } from "@/app/contexts/FormData";
 import { View, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-type Step = {
-  id: number;
-  done: boolean;
-};
-interface ProgressHorizontalBarProps {
-  stepList: Step[];
-}
-export default function ProgressHorizontalBar({
-  stepList,
-}: ProgressHorizontalBarProps) {
+export default function ProgressHorizontalBar() {
+  const { steps } = useCreatingQueue();
+
   console.log({
-    stepList,
+    steps,
   });
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        {stepList.map((step, index) => (
+        {steps.map((step, index) => (
           <View key={step.id} style={styles.circleContainer}>
             <View
               style={{
@@ -44,7 +38,7 @@ export default function ProgressHorizontalBar({
                 <View style={styles.subCircle} />
               )}
             </View>
-            {index + 1 < stepList.length && <View style={styles.rightLine} />}
+            {index + 1 < steps.length && <View style={styles.rightLine} />}
           </View>
         ))}
       </View>

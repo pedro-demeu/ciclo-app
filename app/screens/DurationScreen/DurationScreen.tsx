@@ -1,24 +1,33 @@
 import { SafeAreaView, View, Image, Text } from "react-native";
 import ProgressHorizontalBar from "../../components/ProgressCreatingCalendar/ProgressHorizontalBar";
-import { useSteps } from "../../contexts/StepContext";
 import { useState } from "react";
 import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
 import Bottom from "../../components/Bottom/Bottom";
 import NumberInput from "../../components/NumberInput/NumberInput";
-import { Step } from "../CreateCalendarScreen/CreateCalendarScreen";
+import { useCreatingQueue } from "@/app/contexts/FormData";
 
 export default function DurationScreen() {
   const [duration, setDuration] = useState(5);
-  const { steps, nextStep, updateStep } = useSteps();
-  const [selected, setSelected] = useState<Step | null>(null);
+  const { currentStep, formData, nextStep, prevStep, updateFormData, steps } =
+    useCreatingQueue();
+
+  console.log({
+    currentStep,
+    formData,
+  });
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleNext = () => {
     navigation.navigate("intensity");
     nextStep();
-    updateStep(2, true);
+    updateFormData({ duration });
+  };
+
+  const handleBack = () => {
+    navigation.goBack();
+    prevStep();
   };
 
   return (
@@ -79,7 +88,16 @@ export default function DurationScreen() {
           >
             <NumberInput initialValue={duration} onChange={setDuration} />
           </View>
-          <Bottom label="Continuar" onPress={handleNext} />
+
+          <View
+            style={{
+              marginBottom: 20,
+            }}
+          >
+            <Bottom label="Continuar" onPress={handleNext} />
+          </View>
+
+          <Bottom label="Voltar" onPress={handleBack} />
         </View>
       </View>
       <View

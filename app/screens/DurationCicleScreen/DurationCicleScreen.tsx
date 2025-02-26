@@ -1,24 +1,25 @@
 import { SafeAreaView, View, Image, Text } from "react-native";
 import ProgressHorizontalBar from "../../components/ProgressCreatingCalendar/ProgressHorizontalBar";
-import { useSteps } from "../../contexts/StepContext";
 import { useState } from "react";
 import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
 import Bottom from "../../components/Bottom/Bottom";
 import NumberInput from "../../components/NumberInput/NumberInput";
-import { Step } from "../CreateCalendarScreen/CreateCalendarScreen";
+import { useCreatingQueue } from "@/app/contexts/FormData";
 
 export default function DurationCicleScreen() {
   const [duration, setDuration] = useState(21);
-  const { steps, nextStep, updateStep } = useSteps();
-  const [selected, setSelected] = useState<Step | null>(null);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
+  const { nextStep, updateFormData, steps } = useCreatingQueue();
   const handleNext = () => {
     navigation.navigate("contraceptive");
     nextStep();
-    updateStep(4, true);
+    updateFormData({ duration });
+  };
+
+  const handleBack = () => {
+    navigation.goBack();
   };
 
   return (
@@ -79,7 +80,15 @@ export default function DurationCicleScreen() {
           >
             <NumberInput initialValue={duration} onChange={setDuration} />
           </View>
-          <Bottom label="Continuar" onPress={handleNext} />
+          <View
+            style={{
+              marginBottom: 20,
+            }}
+          >
+            <Bottom label="Continuar" onPress={handleNext} />
+          </View>
+
+          <Bottom label="Voltar" onPress={handleBack} />
         </View>
       </View>
       <View
