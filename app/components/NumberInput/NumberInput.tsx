@@ -17,8 +17,8 @@ const NumberInput = ({
   const [internalValue, setInternalValue] = useState(value);
 
   const handleIncrement = () => {
-    if (value < max) {
-      const newValue = value + 1;
+    if (internalValue < max) {
+      const newValue = internalValue + 1;
       setInternalValue(newValue);
       onChange && onChange(newValue);
     }

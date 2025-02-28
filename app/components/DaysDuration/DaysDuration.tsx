@@ -8,7 +8,7 @@ interface DaysDurationProps {
   value: number;
   setValue: (n: number) => void;
 }
-export function DaysDuration({
+export default function DaysDuration({
   value,
   setValue,
   onNext,

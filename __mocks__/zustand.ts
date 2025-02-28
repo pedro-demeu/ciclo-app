@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // __mocks__/zustand.ts
 import type * as ZustandExportedTypes from "zustand";
 export * from "zustand";

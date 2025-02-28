@@ -1,13 +1,11 @@
-import { SafeAreaView, View, Image, Text } from "react-native";
+import { SafeAreaView, View, Image } from "react-native";
 import ProgressHorizontalBar from "../../components/ProgressCreatingCalendar/ProgressHorizontalBar";
 import { useState } from "react";
 import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
-import Bottom from "../../components/Bottom/Bottom";
-import NumberInput from "../../components/NumberInput/NumberInput";
 import { useCalendarFormContext } from "@/app/contexts/FormData";
-import { DaysDuration } from "@/app/components/DaysDuration/DaysDuration";
+import DaysDuration from "@/app/components/DaysDuration/DaysDuration";
 
 export default function DurationScreen() {
   const [duration, setDuration] = useState(5);

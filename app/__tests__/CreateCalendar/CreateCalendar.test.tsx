@@ -3,7 +3,7 @@ import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 import { CreatingQueueState } from "../../contexts/FormData";
 import { CreateCalendar } from "../../components/CreateCalendar/CreateCalendar";
-import { create } from "../../setupTests";
+import { create } from "../../../__mocks__/zustand";
 
 create<CreatingQueueState>((set) => ({
   currentStep: 0,

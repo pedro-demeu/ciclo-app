@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
 import { act, fireEvent, render } from "@testing-library/react-native";
-import { DaysDuration } from "../../components/DaysDuration/DaysDuration";
+import DaysDuration from "../../components/DaysDuration/DaysDuration";
 jest.mock("expo-font");
 
 describe("DaysDuration - Unit Tests", () => {
