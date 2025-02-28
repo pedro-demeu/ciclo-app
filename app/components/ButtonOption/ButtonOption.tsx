@@ -13,7 +13,7 @@ export default function ButtonOption({
     <TouchableOpacity
       onPress={onPress}
       style={{
-        backgroundColor: selected ? "#4BA4F2" : "#FFF",
+        backgroundColor: selected ? "#913346" : "#FFF",
         padding: 10,
         borderRadius: 5,
         marginVertical: 10,
