@@ -22,7 +22,7 @@ interface FormData {
   startDate?: string;
 }
 
-interface CreatingQueueState {
+export interface CreatingQueueState {
   currentStep: number;
   steps: { id: number; done: boolean }[];
   formData: FormData;
