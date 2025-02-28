@@ -1,7 +1,7 @@
 import { SetStateAction, useState } from "react";
 import { View, Text } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import Bottom from "./Bottom/Bottom";
+import Bottom from "../Bottom/Bottom";
 
 interface CreateCalendarProps {
   selectedDate?: string | null;

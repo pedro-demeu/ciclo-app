@@ -2,8 +2,8 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 import { CreatingQueueState } from "../../contexts/FormData";
+import { CreateCalendar } from "../../components/CreateCalendar/CreateCalendar";
 import { create } from "../../setupTests";
-import { CreateCalendar } from "@/app/components/CreateCalendar";
 
 create<CreatingQueueState>((set) => ({
   currentStep: 0,
