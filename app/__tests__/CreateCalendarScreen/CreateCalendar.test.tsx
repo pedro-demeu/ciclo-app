@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import { render } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import { CreatingQueueState } from "../../contexts/FormData";
 import { create } from "../../setupTests";
 import { CreateCalendar } from "@/app/components/CreateCalendar";
@@ -48,7 +48,7 @@ create<CreatingQueueState>((set) => ({
 }));
 describe("CreateCalendar - Unit Tests", () => {
   it.only("when date selected then next button should be visible", () => {
-    const { getByText, debug } = render(
+    const { getByText } = render(
       <CreateCalendar
         onBack={() => {}}
         onNext={() => {}}
@@ -58,9 +58,11 @@ describe("CreateCalendar - Unit Tests", () => {
     );
 
     const nextButton = getByText(/continuar/i);
-
-    debug();
     expect(nextButton).not.toBeVisible();
+
+    fireEvent.press(getByText("10"));
+
+    expect(nextButton).toBeVisible();
   });
   it.todo("when no date selected then next button should be hidden");
   it.todo("when go back pressed then should go to home");

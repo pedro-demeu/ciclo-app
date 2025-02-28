@@ -74,6 +74,7 @@ export function CreateCalendar({
           }}
           onDayPress={(day: { dateString: SetStateAction<string | null> }) => {
             setSelectedDate(day.dateString as string);
+            day.dateString && setNextButtonEnabled(true);
           }}
           markedDates={{
             [String(selectedDate)]: {
