@@ -1,12 +1,11 @@
-import { SafeAreaView, View, Image, Text } from "react-native";
+import { SafeAreaView, View, Image } from "react-native";
 import ProgressHorizontalBar from "../../components/ProgressCreatingCalendar/ProgressHorizontalBar";
 import { useState } from "react";
 import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
-import Bottom from "../../components/Bottom/Bottom";
-import NumberInput from "../../components/NumberInput/NumberInput";
 import { useCalendarFormContext } from "@/app/contexts/FormData";
+import CicleDuration from "@/app/components/CicleDuration/CicleDuration";
 
 export default function DurationCicleScreen() {
   const [duration, setDuration] = useState(21);
@@ -50,46 +49,12 @@ export default function DurationCicleScreen() {
         >
           <ProgressHorizontalBar />
         </View>
-        <View>
-          <Text
-            style={{
-              color: "white",
-              fontFamily: "poppings",
-              textAlign: "center",
-              alignSelf: "center",
-              fontSize: 22,
-              fontWeight: "100",
-              marginBottom: 20,
-            }}
-          >
-            <Text
-              style={{
-                fontWeight: "bold",
-                fontFamily: "poppings",
-              }}
-            >
-              Quantos dias
-            </Text>{" "}
-            dura seu ciclo?
-          </Text>
-
-          <View
-            style={{
-              marginBottom: 60,
-            }}
-          >
-            <NumberInput initialValue={duration} onChange={setDuration} />
-          </View>
-          <View
-            style={{
-              marginBottom: 20,
-            }}
-          >
-            <Bottom label="Continuar" onPress={handleNext} />
-          </View>
-
-          <Bottom label="Voltar" onPress={handleBack} />
-        </View>
+        <CicleDuration
+          onBack={handleBack}
+          onNext={handleNext}
+          value={duration}
+          setValue={setDuration}
+        />
       </View>
       <View
         style={{
