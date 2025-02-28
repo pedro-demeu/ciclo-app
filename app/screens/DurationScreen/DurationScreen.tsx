@@ -7,6 +7,7 @@ import { RootStackParamList } from "../../stack/RootStack";
 import Bottom from "../../components/Bottom/Bottom";
 import NumberInput from "../../components/NumberInput/NumberInput";
 import { useCalendarFormContext } from "@/app/contexts/FormData";
+import { DaysDuration } from "@/app/components/DaysDuration/DaysDuration";
 
 export default function DurationScreen() {
   const [duration, setDuration] = useState(5);
@@ -52,47 +53,12 @@ export default function DurationScreen() {
         >
           <ProgressHorizontalBar />
         </View>
-        <View>
-          <Text
-            style={{
-              color: "white",
-              fontFamily: "poppings",
-              textAlign: "center",
-              alignSelf: "center",
-              fontSize: 22,
-              fontWeight: "100",
-              marginBottom: 20,
-            }}
-          >
-            <Text
-              style={{
-                fontWeight: "bold",
-                fontFamily: "poppings",
-              }}
-            >
-              Quantos dias
-            </Text>{" "}
-            costuma durar a sua menstruação?
-          </Text>
-
-          <View
-            style={{
-              marginBottom: 60,
-            }}
-          >
-            <NumberInput initialValue={duration} onChange={setDuration} />
-          </View>
-
-          <View
-            style={{
-              marginBottom: 20,
-            }}
-          >
-            <Bottom label="Continuar" onPress={handleNext} />
-          </View>
-
-          <Bottom label="Voltar" onPress={handleBack} />
-        </View>
+        <DaysDuration
+          value={duration}
+          setValue={setDuration}
+          onBack={handleBack}
+          onNext={handleNext}
+        />
       </View>
       <View
         style={{

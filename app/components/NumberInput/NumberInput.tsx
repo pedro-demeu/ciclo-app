@@ -2,28 +2,43 @@ import React, { useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const NumberInput = ({ initialValue = 5, min = 0, max = 99, onChange }) => {
-  const [value, setValue] = useState(initialValue);
+interface NumberInputProps {
+  value: number;
+  onChange: (n: number) => void;
+  min?: number;
+  max?: number;
+}
+const NumberInput = ({
+  value = 5,
+  min = 0,
+  max = 99,
+  onChange,
+}: NumberInputProps) => {
+  const [internalValue, setInternalValue] = useState(value);
 
   const handleIncrement = () => {
     if (value < max) {
       const newValue = value + 1;
-      setValue(newValue);
+      setInternalValue(newValue);
       onChange && onChange(newValue);
     }
   };
 
   const handleDecrement = () => {
-    if (value > min) {
-      const newValue = value - 1;
-      setValue(newValue);
+    if (internalValue > min) {
+      const newValue = internalValue - 1;
+      setInternalValue(newValue);
       onChange && onChange(newValue);
     }
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleDecrement} style={styles.button}>
+      <TouchableOpacity
+        onPress={handleDecrement}
+        style={styles.button}
+        aria-label="minus"
+      >
         <Text style={styles.buttonText}>
           <Icon
             name="minus"
@@ -34,8 +49,14 @@ const NumberInput = ({ initialValue = 5, min = 0, max = 99, onChange }) => {
           />
         </Text>
       </TouchableOpacity>
-      <Text style={styles.valueText}>{String(value).padStart(2, "0")}</Text>
-      <TouchableOpacity onPress={handleIncrement} style={styles.button}>
+      <Text style={styles.valueText}>
+        {String(internalValue).padStart(2, "0")}
+      </Text>
+      <TouchableOpacity
+        onPress={handleIncrement}
+        style={styles.button}
+        aria-label="plus"
+      >
         <Text style={styles.buttonText}>
           <Icon
             name="plus"
