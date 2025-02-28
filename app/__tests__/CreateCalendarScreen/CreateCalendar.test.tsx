@@ -47,7 +47,7 @@ create<CreatingQueueState>((set) => ({
     }),
 }));
 describe("CreateCalendar - Unit Tests", () => {
-  it.only("when date selected then next button should be visible", () => {
+  it("when date selected then next button should be visible", () => {
     const { getByText } = render(
       <CreateCalendar
         onBack={() => {}}
@@ -64,6 +64,20 @@ describe("CreateCalendar - Unit Tests", () => {
 
     expect(nextButton).toBeVisible();
   });
-  it.todo("when no date selected then next button should be hidden");
-  it.todo("when go back pressed then should go to home");
+  it("when go back pressed then should onBack callback called", () => {
+    const onBackMock = jest.fn(); // Mock the onBack callback
+
+    const { getByText } = render(
+      <CreateCalendar
+        onBack={onBackMock}
+        onNext={() => {}}
+        setSelectedDate={(date) => {}}
+        selectedDate={null}
+      />
+    );
+
+    const backButton = getByText(/voltar/i);
+    fireEvent.press(backButton);
+    expect(onBackMock).toHaveBeenCalledTimes(1);
+  });
 });
