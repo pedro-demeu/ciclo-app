@@ -9,7 +9,7 @@ interface CreateCalendarProps {
   onBack: () => void;
   onNext: () => void;
 }
-export function CreateCalendar({
+export default function CreateCalendar({
   onBack,
   onNext,
   setSelectedDate,

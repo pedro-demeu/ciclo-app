@@ -5,9 +5,18 @@ import Bottom from "../../components/Bottom/Bottom";
 import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "@/app/stack/RootStack";
+import { useEffect } from "react";
+import { useCalendarFormContext } from "@/app/contexts/FormData";
 
 export default function SuccessCalendarScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { resetFormData } = useCalendarFormContext();
+
+  useEffect(() => {
+    return () => {
+      resetFormData();
+    };
+  }, [resetFormData]);
 
   //TODO: clean up the Stack Navigation when exit
   return (
@@ -57,12 +66,17 @@ export default function SuccessCalendarScreen() {
             alignSelf: "center",
           }}
         >
-          <Button label="Ver calendário" onPress={() => {}} />
+          <Button
+            label="Ver calendário"
+            onPress={() => {
+              navigation.navigate("calendarScreen");
+            }}
+          />
         </View>
         <Bottom
           label="Ir para Home"
           onPress={() => {
-            navigation.navigate("homeWithCalendar");
+            navigation.navigate("home");
           }}
         />
       </View>

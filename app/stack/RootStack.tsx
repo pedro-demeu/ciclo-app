@@ -9,6 +9,7 @@ import DurationCicleScreen from "../screens/DurationCicleScreen/DurationCicleScr
 import ContraceptiveScreen from "../screens/ContraceptiveScreen/ContraceptiveScreen";
 import SuccessCalendarScreen from "../screens/SuccessCalendarScreen/SuccessCalendarScreen";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
+import CalendarScreen from "../screens/CalendarScreen/CalendarScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,8 @@ export type RootStackParamList = {
   durationCicle: undefined;
   contraceptive: undefined;
   successCalendar: undefined;
-  homeWithCalendar: undefined;
+  home: undefined;
+  calendarScreen: undefined;
 };
 
 const RootStack = () => {
@@ -42,7 +44,8 @@ const RootStack = () => {
       <Stack.Screen name="durationCicle" component={DurationCicleScreen} />
       <Stack.Screen name="contraceptive" component={ContraceptiveScreen} />
       <Stack.Screen name="successCalendar" component={SuccessCalendarScreen} />
-      <Stack.Screen name="homeWithCalendar" component={HomeScreen} />
+      <Stack.Screen name="home" component={HomeScreen} />
+      <Stack.Screen name="calendarScreen" component={CalendarScreen} />
     </Stack.Navigator>
   );
 };

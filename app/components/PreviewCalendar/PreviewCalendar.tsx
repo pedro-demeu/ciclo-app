@@ -1,7 +1,11 @@
+import { RootStackParamList } from "../../stack/RootStack";
 import { Ionicons } from "@expo/vector-icons";
+import { NavigationProp } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
 import { View, Text } from "react-native";
 
 export default function PreviewCalendar() {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <View
       style={{
@@ -100,6 +104,9 @@ export default function PreviewCalendar() {
             alignSelf: "center",
             color: "#FFF",
             fontWeight: "bold",
+          }}
+          onPress={() => {
+            navigation.navigate("calendarScreen");
           }}
         >
           Ver calendário menstrual

@@ -4,7 +4,7 @@ import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
 import { useCalendarFormContext } from "@/app/contexts/FormData";
-import { CreateCalendar } from "@/app/components/CreateCalendar/CreateCalendar";
+import CreateCalendar from "@/app/components/CreateCalendar/CreateCalendar";
 import { useState } from "react";
 
 export interface Step {

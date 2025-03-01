@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
-import { CreateCalendar } from "../../components/CreateCalendar/CreateCalendar";
+import CreateCalendar from "../../components/CreateCalendar/CreateCalendar";
 
 describe("CreateCalendar - Unit Tests", () => {
   it("when date selected then next button should be visible", () => {
