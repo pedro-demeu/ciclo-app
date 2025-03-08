@@ -50,31 +50,137 @@ export default function CalendarScreen() {
         Baixa probabilidade de engravidar
       </Text>
 
-      <Calendar
+      <View
         style={{
-          borderRadius: 19,
-          height: 350,
+          backgroundColor: "#FEFEFE",
+          borderRadius: 20,
           shadowColor: "#000",
           shadowOffset: { width: 2, height: 2 },
           shadowOpacity: 0.1,
+          paddingTop: 25,
           shadowRadius: 3.84,
           elevation: 5,
         }}
-        theme={{
-          backgroundColor: "#ffffff",
-          calendarBackground: "#ffffff",
-          textSectionTitleColor: "#b6c1cd",
-          selectedDayBackgroundColor: "#FF2255",
-          selectedDayTextColor: "#FFFFFF",
-          todayTextColor: "#FF2255",
-          dayTextColor: "#2d4150",
-        }}
-        markedDates={markedDates}
-      />
+      >
+        <Calendar
+          style={{
+            borderRadius: 0,
+            height: 350,
+          }}
+          theme={{
+            backgroundColor: "#ffffff",
+            calendarBackground: "#FEFEFE",
+            textSectionTitleColor: "#b6c1cd",
+            selectedDayBackgroundColor: "#FF2255",
+            selectedDayTextColor: "#FFFFFF",
+            todayTextColor: "#FF2255",
+            dayTextColor: "#2d4150",
+          }}
+          markedDates={markedDates}
+        />
 
-      <View>
-        <Text>Menstruação</Text>
-        <Text>Período fértil (Ovulação)</Text>
+        <View
+          style={{
+            backgroundColor: "#FEFEFE",
+            paddingHorizontal: 20,
+            marginTop: 10,
+            width: "100%",
+            marginBottom: 20,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 5,
+              }}
+            >
+              <View
+                style={{
+                  height: 22,
+                  width: 22,
+                  marginRight: 5,
+                  backgroundColor: "red",
+                  borderRadius: 50,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#FFF",
+                    fontSize: 12,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {new Date().getDate() || 10}
+                </Text>
+              </View>
+
+              <Text
+                style={{
+                  fontSize: 12,
+                }}
+              >
+                Menstruação
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 5,
+              }}
+            >
+              <View
+                style={{
+                  height: 22,
+                  width: 22,
+                  marginRight: 5,
+                  backgroundColor: "transparent",
+                  borderRadius: 50,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#111",
+                    fontSize: 12,
+                    fontWeight: "bold",
+                  }}
+                >
+                  {new Date().getDate() || 10}
+                </Text>
+
+                <View
+                  style={{
+                    width: 5,
+                    height: 5,
+                    backgroundColor: "red",
+                    borderRadius: 50,
+                  }}
+                />
+              </View>
+
+              <Text
+                style={{
+                  fontSize: 12,
+                }}
+              >
+                Período fértil (Ovulação)
+              </Text>
+            </View>
+          </View>
+        </View>
       </View>
 
       <View
