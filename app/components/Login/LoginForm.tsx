@@ -40,7 +40,7 @@ export default function LoginForm() {
     resolver: zodResolver(validationSchema),
   });
   const onSubmit = (data: DataForm) => {
-    navigation.navigate("welcome");
+    navigation.navigate("home");
     console.log(data);
   };
 

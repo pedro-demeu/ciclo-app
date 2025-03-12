@@ -6,8 +6,13 @@ import { Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../stack/RootStack";
+import { useCalendarServices } from "@/app/services/useCalendarServices";
+import { useEffect, useState } from "react";
+
 export default function CalendarScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const [data, setData] = useState<string | undefined>(undefined);
+  const { loadData } = useCalendarServices();
 
   // Definindo datas com diferentes marcações
   const datesConfig = [
@@ -34,6 +39,21 @@ export default function CalendarScreen() {
     {} as Record<string, any>
   );
 
+  useEffect(() => {
+    async function getData() {
+      try {
+        setData(await loadData());
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getData();
+  });
+
+  console.log({
+    data,
+  });
   return (
     <LayoutHome>
       <Text

@@ -13,7 +13,7 @@ export interface Step {
   done: boolean;
 }
 
-interface FormData {
+export interface FormData {
   lastMenses?: string;
   duration?: number;
   intensity?: Intensity | null;

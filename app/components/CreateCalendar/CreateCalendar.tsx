@@ -49,23 +49,24 @@ export default function CreateCalendar({
 
       <View
         style={{
-          marginTop: 100,
-          marginBottom: 60,
+          marginTop: 70,
+          marginBottom: 20,
+          backgroundColor: "#FEFEFE",
+          borderRadius: 20,
+          shadowOpacity: 0.1,
+          paddingTop: 25,
+          shadowRadius: 3.84,
+          elevation: 5,
         }}
       >
         <Calendar
           style={{
-            borderRadius: 19,
+            borderRadius: 0,
             height: 350,
-            shadowColor: "#000",
-            shadowOffset: { width: 2, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 3.84,
-            elevation: 5,
           }}
           theme={{
             backgroundColor: "#ffffff",
-            calendarBackground: "#ffffff",
+            calendarBackground: "#FEFEFE",
             textSectionTitleColor: "#b6c1cd",
             selectedDayBackgroundColor: "#FF2255",
             selectedDayTextColor: "#FFFFFF",
@@ -82,6 +83,15 @@ export default function CreateCalendar({
               disableTouchEvent: true,
               selectedDotColor: "orange",
             },
+          }}
+        />
+        <View
+          style={{
+            backgroundColor: "#FEFEFE",
+            paddingHorizontal: 20,
+            marginTop: 10,
+            width: "100%",
+            marginBottom: 20,
           }}
         />
       </View>

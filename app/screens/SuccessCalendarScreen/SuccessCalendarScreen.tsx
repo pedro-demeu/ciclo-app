@@ -5,18 +5,26 @@ import Bottom from "../../components/Bottom/Bottom";
 import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "@/app/stack/RootStack";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useCalendarFormContext } from "@/app/contexts/FormData";
+import { useCalendarServices } from "@/app/services/useCalendarServices";
 
 export default function SuccessCalendarScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { resetFormData } = useCalendarFormContext();
+  const { resetFormData, formData } = useCalendarFormContext();
+  const { create } = useCalendarServices();
+
+  const handleSave = useCallback(async () => {
+    await create(formData);
+  }, [create, formData]);
 
   useEffect(() => {
+    handleSave();
+
     return () => {
       resetFormData();
     };
-  }, [resetFormData]);
+  }, [resetFormData, handleSave]);
 
   //TODO: clean up the Stack Navigation when exit
   return (
